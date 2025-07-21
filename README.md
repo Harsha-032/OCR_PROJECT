@@ -14,7 +14,7 @@ A full-stack Django app to extract, manage, and analyze receipt data using OCR �
 
 <div align="center">
   <img src="https://github.com/Harsha-032/OCR_PROJECT/raw/main/screenshots/dashboard.png" width="45%">
-  <img src="https://github.com/Harsha-032/OCR_PROJECr/raw/main/screenshots/list.png" width="45%">
+ <img src="https://github.com/Harsha-032/OCR_PROJECT/raw/main/screenshots/list.png" >
 </div>
 
 ---
@@ -138,27 +138,26 @@ receipt_processor/
 
 ---
 
-## 📷 Demo
+## 🎥 Sample Output
 
-<video width="100%" controls>
-  <source src="screenshot/Ocr_Demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[Click to watch the demo video](https://github.com/Harsha-032/OCR_PROJECT/blob/main/screenshots/Ocr_Demo%20.mp4)
+
+
 
 ## 📷 Screenshots
 
 
 - `dashboard` – analytics overview
 
- <img src="https://github.com/Harsha-032/OCR_PROJECT/raw/main/screenshots/dashboard.png" width="45%">
+ <img src="https://github.com/Harsha-032/OCR_PROJECT/raw/main/screenshots/dashboard.png" >
 
 - `upload` – file upload form
 
- <img src="https://github.com/Harsha-032/OCR_PROJECT/raw/main/screenshots/upload.png" width="45%">
+ <img src="https://github.com/Harsha-032/OCR_PROJECT/raw/main/screenshots/upload.png" >
 
 - `list` – receipt list with filters
 
- <img src="https://github.com/Harsha-032/OCR_PROJECT/raw/main/screenshots/list.png" width="45%">
+ <img src="https://github.com/Harsha-032/OCR_PROJECT/raw/main/screenshots/list.png" >
 
 
 
