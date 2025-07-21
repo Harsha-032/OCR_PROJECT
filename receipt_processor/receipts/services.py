@@ -8,19 +8,15 @@ logger = logging.getLogger(__name__)
 class ReceiptService:
     @staticmethod
     def process_receipt_file(file) -> Receipt:
-        """Process uploaded receipt file and create Receipt object."""
         try:
-            # Extract text from file
             extracted_text = extract_text_from_file(file)
             if not extracted_text:
                 raise ValidationError("Could not extract text from the file.")
             
-            # Parse receipt data
             parsed_data = parse_receipt(extracted_text)
             if not parsed_data.get('amount') or not parsed_data.get('transaction_date'):
                 raise ValidationError("Could not extract required fields from the receipt.")
             
-            # Create and save receipt
             receipt = Receipt(
                 file=file,
                 vendor=parsed_data['vendor'],
@@ -38,7 +34,6 @@ class ReceiptService:
 
     @staticmethod
     def search_receipts(query=None, vendor=None, start_date=None, end_date=None, min_amount=None, max_amount=None, category=None):
-        """Search receipts with various filters."""
         receipts = Receipt.objects.filter(is_deleted=False)
         
         if query:
@@ -60,7 +55,6 @@ class ReceiptService:
 
     @staticmethod
     def get_receipt_stats(receipts):
-        """Calculate statistics for given receipts."""
         from django.db.models import Sum, Avg, Count
         from django.db.models.functions import TruncMonth
         

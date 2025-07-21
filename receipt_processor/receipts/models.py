@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.utils import timezone
-from django.contrib.postgres.fields import ArrayField
 from enum import Enum
 
 class Category(Enum):
@@ -27,7 +26,7 @@ class Receipt(models.Model):
     extracted_text = models.TextField(blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
-    is_deleted = models.BooleanField(default=False)
+    is_deleted = models.BooleanField(default=False)  # Soft delete field
     
     class Meta:
         ordering = ['-transaction_date']
@@ -36,12 +35,14 @@ class Receipt(models.Model):
             models.Index(fields=['transaction_date']),
             models.Index(fields=['amount']),
             models.Index(fields=['category']),
+            models.Index(fields=['is_deleted']),
         ]
-
-    def delete(self, *args, **kwargs):
-        """Soft delete implementation"""
-        self.is_deleted = True
-        self.save()    
     
     def __str__(self):
         return f"{self.vendor} - {self.transaction_date} - ${self.amount}"
+    
+    def delete(self, *args, **kwargs):
+        """Override delete to handle file deletion"""
+        if self.file:
+            self.file.delete(save=False)
+        super().delete(*args, **kwargs)
