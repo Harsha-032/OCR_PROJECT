@@ -74,3 +74,28 @@ python manage.py createsuperuser
 
 # Run development server
 python manage.py runserver
+
+🖥️ Usage
+Upload Receipts:
+
+Navigate to /receipts/upload
+
+Select a file (PDF, JPG, PNG, TXT)
+
+System will automatically extract data
+
+View Dashboard:
+
+See spending overview at /
+
+Visualize trends and distributions
+
+Manage Receipts:
+
+View all receipts at /receipts
+
+Search, filter, and sort
+
+Delete unwanted receipts
+
+📂 Project Structure
