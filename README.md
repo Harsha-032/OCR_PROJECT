@@ -171,7 +171,7 @@ receipt_processor/
 
 ## 📬 Contact
 
-**Your Name**  
+**Harsha C**  
 📧 harshac032@gmail.com  
 🔗 [Project Repository](https://github.com/Harsha-032/OCR_PROJECT)
 
