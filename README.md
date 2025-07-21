@@ -13,7 +13,7 @@ A full-stack Django app to extract, manage, and analyze receipt data using OCR ð
 ## ðŸ“¸ Preview
 
 <div align="center">
-  <img src="https://github.com/yourusername/receipt-processor/raw/main/screenshots/dashboard.png" width="45%">
+  <img src="https://github.com/Harsha-032/OCR_PROJECT/raw/main/screenshots/dashboard.png" width="45%">
   <img src="https://github.com/yourusername/receipt-processor/raw/main/screenshots/upload.png" width="45%">
 </div>
 
