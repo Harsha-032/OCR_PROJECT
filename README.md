@@ -14,7 +14,7 @@ A full-stack Django app to extract, manage, and analyze receipt data using OCR �
 
 <div align="center">
   <img src="https://github.com/Harsha-032/OCR_PROJECT/raw/main/screenshots/dashboard.png" width="45%">
-  <img src="https://github.com/yourusername/receipt-processor/raw/main/screenshots/upload.png" width="45%">
+  <img src="https://github.com/Harsha-032/OCR_PROJECr/raw/main/screenshots/list.png" width="45%">
 </div>
 
 ---
@@ -138,13 +138,29 @@ receipt_processor/
 
 ---
 
+## 📷 Demo
+
+<video width="100%" controls>
+  <source src="screenshot/Ocr_Demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 ## 📷 Screenshots
 
-> Place these inside a `/screenshots` folder in your repo:
 
-- `dashboard.png` – analytics overview
-- `upload.png` – file upload form
-- `list.png` – receipt list with filters
+- `dashboard` – analytics overview
+
+ <img src="https://github.com/Harsha-032/OCR_PROJECT/raw/main/screenshots/dashboard.png" width="45%">
+
+- `upload` – file upload form
+
+ <img src="https://github.com/Harsha-032/OCR_PROJECT/raw/main/screenshots/upload.png" width="45%">
+
+- `list` – receipt list with filters
+
+ <img src="https://github.com/Harsha-032/OCR_PROJECT/raw/main/screenshots/list.png" width="45%">
+
+
 
 ---
 
