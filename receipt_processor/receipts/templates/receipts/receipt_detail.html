@@ -1,0 +1,57 @@
+{% extends "receipts/base.html" %}
+{% load humanize %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Receipt Details</h4>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">Vendor:</div>
+                    <div class="col-md-8">{{ receipt.vendor }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">Date:</div>
+                    <div class="col-md-8">{{ receipt.transaction_date|date:"M d, Y" }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">Amount:</div>
+                    <div class="col-md-8">${{ receipt.amount|floatformat:2 }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">Category:</div>
+                    <div class="col-md-8">{{ receipt.get_category_display }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">File:</div>
+                    <div class="col-md-8">
+                        <a href="{{ receipt.file.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h5 class="mt-4">Extracted Text</h5>
+                        <div class="bg-light p-3" style="max-height: 300px; overflow-y: auto;">
+                            <pre>{{ receipt.extracted_text }}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'receipt_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to List
+                </a>
+                 <a href="{% url 'receipt_delete' receipt.pk %}" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Delete
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

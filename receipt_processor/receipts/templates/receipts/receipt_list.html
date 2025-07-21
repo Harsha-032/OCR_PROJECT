@@ -1,0 +1,177 @@
+{% extends "receipts/base.html" %}
+{% load humanize %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4>Receipts</h4>
+                <a href="{% url 'receipt_upload' %}" class="btn btn-sm btn-primary">
+                    <i class="bi bi-plus"></i> Upload Receipt
+                </a>
+            </div>
+            <div class="card-body">
+                <form method="get" class="mb-4">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            {{ search_form.search_query }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ search_form.vendor }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ search_form.category }}
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary w-100">Filter</button>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="{% url 'receipt_list' %}" class="btn btn-secondary w-100">Reset</a>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-3">
+                            {{ search_form.start_date }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ search_form.end_date }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ search_form.min_amount }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ search_form.max_amount }}
+                        </div>
+                    </div>
+                </form>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a
+                                        href="?sort_by=vendor{% if request.GET.sort_by == 'vendor' %}-{% endif %}&{{ request.GET.urlencode }}">
+                                        Vendor
+                                        {% if request.GET.sort_by == 'vendor' %}<i class="bi bi-arrow-up"></i>
+                                        {% elif request.GET.sort_by == '-vendor' %}<i class="bi bi-arrow-down"></i>
+                                        {% endif %}
+                                    </a>
+                                </th>
+                                <th>
+                                    <a
+                                        href="?sort_by=transaction_date{% if request.GET.sort_by == 'transaction_date' %}-{% endif %}&{{ request.GET.urlencode }}">
+                                        Date
+                                        {% if request.GET.sort_by == 'transaction_date' %}<i class="bi bi-arrow-up"></i>
+                                        {% elif request.GET.sort_by == '-transaction_date' %}<i
+                                            class="bi bi-arrow-down"></i>
+                                        {% endif %}
+                                    </a>
+                                </th>
+                                <th>
+                                    <a
+                                        href="?sort_by=amount{% if request.GET.sort_by == 'amount' %}-{% endif %}&{{ request.GET.urlencode }}">
+                                        Amount
+                                        {% if request.GET.sort_by == 'amount' %}<i class="bi bi-arrow-up"></i>
+                                        {% elif request.GET.sort_by == '-amount' %}<i class="bi bi-arrow-down"></i>
+                                        {% endif %}
+                                    </a>
+                                </th>
+                                <th>Category</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for receipt in receipts %}
+                            <tr>
+                                <td>{{ receipt.vendor }}</td>
+                                <td>{{ receipt.transaction_date|date:"M d, Y" }}</td>
+                                <td>${{ receipt.amount|floatformat:2 }}</td>
+                                <td>{{ receipt.get_category_display }}</td>
+                                <td>
+                                    <a href="{% url 'receipt_detail' receipt.pk %}"
+                                        class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-eye"></i> View
+                                    </a>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal{{ receipt.pk }}">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center">No receipts found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% if is_paginated %}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1&{{ request.GET.urlencode }}">First</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link"
+                                href="?page={{ page_obj.previous_page_number }}&{{ request.GET.urlencode }}">Previous</a>
+                        </li>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                        <li class="page-item active">
+                            <a class="page-link" href="?page={{ num }}&{{ request.GET.urlencode }}">{{ num }}</a>
+                        </li>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <li
+                            class="page-item">
+                            <a class="page-link" href="?page={{ num }}&{{ request.GET.urlencode }}">{{ num }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link"
+                                    href="?page={{ page_obj.next_page_number }}&{{ request.GET.urlencode }}">Next</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link"
+                                    href="?page={{ page_obj.paginator.num_pages }}&{{ request.GET.urlencode }}">Last</a>
+                            </li>
+                            {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% for receipt in receipts %}
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal{{ receipt.pk }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete the receipt from {{ receipt.vendor }} dated {{ receipt.transaction_date|date:"M d, Y" }}?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form method="post" action="{% url 'receipt_delete' receipt.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

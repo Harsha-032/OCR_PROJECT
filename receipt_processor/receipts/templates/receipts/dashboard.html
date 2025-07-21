@@ -1,0 +1,128 @@
+{% extends "receipts/base.html" %}
+{% load humanize %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="mb-4">Receipt Dashboard</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Total Spend</h5>
+                <p class="card-text display-6">${{ stats.total_spend|floatformat:2|intcomma }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Average Spend</h5>
+                <p class="card-text display-6">${{ stats.average_spend|floatformat:2|intcomma }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-info mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Total Receipts</h5>
+                <p class="card-text display-6">{{ stats.count|intcomma }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Top Vendors</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Vendor</th>
+                                <th>Count</th>
+                                <th>Total Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for vendor in stats.top_vendors %}
+                            <tr>
+                                <td>{{ vendor.vendor }}</td>
+                                <td>{{ vendor.count }}</td>
+                                <td>${{ vendor.total|floatformat:2 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Category Distribution</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Count</th>
+                                <th>Total Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for category in stats.category_distribution %}
+                            <tr>
+                                <td>{{ category.category }}</td>
+                                <td>{{ category.count }}</td>
+                                <td>${{ category.total|floatformat:2 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Monthly Spending Trend</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th>Total Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for month in stats.monthly_trends %}
+                            <tr>
+                                <td>{{ month.month|date:"M Y" }}</td>
+                                <td>${{ month.total|floatformat:2 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
