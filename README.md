@@ -66,7 +66,7 @@ A full-stack Django app to extract, manage, and analyze receipt data using OCR ð
 
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/receipt-processor.git
+git clone https://github.com/Harsha-032/OCR_PROJECT.git
 cd receipt-processor
 
 # Create and activate virtual environment
